@@ -1,0 +1,13 @@
+{
+  "name": "dependents-tree",
+  "description": "Figure out dependents tree for a given NPM package",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mvayngrib/dependents-tree"
+  },
+  "scripts": {
+    "test": "echo \"no tests yet\""
+  }
+}

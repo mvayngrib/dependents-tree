@@ -8,7 +8,7 @@ module.exports = function(pkgName, cb) {
 
 	var numRunning = 0;
 	var depsTree = {};
-	var seen = [];
+	var seen = {};
 
 	helper(pkgName, depsTree);
 
@@ -32,10 +32,13 @@ module.exports = function(pkgName, cb) {
 			data = JSON.parse(data.body);
 			data.rows.forEach(function (row) {
 				var dep = row.key[1];
-				if (dep && seen.indexOf(dep) == -1) {
-					seen.push(dep);
-					_pkgInfo[dep] = {};
-					helper(dep, _pkgInfo[dep]);
+				if (dep) {
+					if (seen[dep])
+						_pkgInfo[dep] = seen[dep];
+					else {
+						_pkgInfo[dep] = seen[dep] = {};
+						helper(dep, _pkgInfo[dep]);
+					}
 				}
 			});
 

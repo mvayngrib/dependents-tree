@@ -1,11 +1,17 @@
 {
   "name": "dependents-tree",
+  "version": "0.0.1",  
   "description": "Figure out dependents tree for a given NPM package",
   "license": "MIT",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/mvayngrib/dependents-tree"
+  },
+  "dependencies": {
+    "request": ">=1.0.0"
+  },
+  "bin": {
+    "dependents-tree": "./app.js"
   },
   "scripts": {
     "test": "echo \"no tests yet\""

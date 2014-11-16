@@ -1,38 +1,45 @@
 var request = require('request')
 var qs = require('querystring')
-var _pkgName = process.argv[2];
-var depsTree = {};
-var numRunning = 0;
 
-function deps(pkgName, pkgInfo) {
-	numRunning++;
+module.exports = function(pkgName, cb) {
+	if (!pkgName)
+		return cb(new Error("Please enter an NPM package name for which to find a dependents"));
 
-	var from = '[\"' + pkgName + '\"]';
-	var to = '[\"' + pkgName + '\", {}]';
-	if (!pkgInfo) {
-		depsTree[pkgName] = pkgInfo = {};
-	}
 
-	request('http://registry.npmjs.org/-/_view/dependedUpon?' + qs.stringify({
-		group_level: 3,
-		startkey: from,
-		endkey: to,
-		skip: 0,
-		limit: 1000
-	}), function(err, data) {
-		if (err) return console.log(err);
-		
-		data = JSON.parse(data.body);
-		data.rows.forEach(function (row) {
-			if (row.key[1]) {
-				var depInfo = pkgInfo[row.key[1]] = {};
-				deps(row.key[1], depInfo);
-			}
+	var numRunning = 0;
+	var depsTree = {};
+	var seen = [];
+
+	helper(pkgName, depsTree);
+
+	function helper(_pkgName, _pkgInfo) {
+		numRunning++;
+
+		var from = '[\"' + _pkgName + '\"]';
+		var to = '[\"' + _pkgName + '\", {}]';
+
+		request('http://registry.npmjs.org/-/_view/dependedUpon?' + qs.stringify({
+			group_level: 3,
+			startkey: from,
+			endkey: to,
+			skip: 0,
+			limit: 1000
+		}), function(err, data) {
+			numRunning--;
+
+			if (err) return cb(err);
+			
+			data = JSON.parse(data.body);
+			data.rows.forEach(function (row) {
+				var dep = row.key[1];
+				if (dep && seen.indexOf(dep) == -1) {
+					seen.push(dep);
+					_pkgInfo[dep] = {};
+					helper(dep, _pkgInfo[dep]);
+				}
+			});
+
+			if (!numRunning) cb(null, depsTree);
 		});
-
-		if (--numRunning == 0)
-			console.log(JSON.stringify(depsTree, null, '\t'));
-	});
+	}
 }
-
-deps(_pkgName, depsTree);

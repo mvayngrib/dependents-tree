@@ -15,12 +15,12 @@ as a submodule:
 
     var findDependents = require('dependents-tree');
     findDependenents('bittorrent-dht', function(err, tree) {
-        
-	})
+      // tree is the tree of dependents on 'bittorrent-dht'
+    })
 ```
 
-## Result example:
-	
+## Dependents tree example (dependents of bittorrent-dht):
+
 ``` json
 
 {

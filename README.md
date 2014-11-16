@@ -1,7 +1,7 @@
 dependents-tree
 ===============
 
-Figure out dependents tree for a given NPM package
+Figure out the dependents tree for a given NPM package - all the packages that depend on a given package, all the packages that depend on those dependents, etc.
 
 ## Usage
 

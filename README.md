@@ -17,11 +17,11 @@ as a submodule:
     var findDependenents = require('dependents-tree');
     findDependenents.lookup(['bittorrent-dht', 'node-ssdp'], function(err, tree) {
       // tree is the tree of dependents on 'bittorrent-dht'
-		})
+    })
 
     findDependenents.search('bittorrent', function(err, tree) {
         // tree of dependents per module that matches the keyword 'bittorrent'
-		})
+    })
 
 ```
 

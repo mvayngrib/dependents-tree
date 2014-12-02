@@ -1,6 +1,6 @@
 {
   "name": "dependents-tree",
-  "version": "0.0.1",  
+  "version": "0.0.2",
   "description": "Figure out dependents tree for a given NPM package",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,9 @@
     "url": "git://github.com/mvayngrib/dependents-tree"
   },
   "dependencies": {
-    "request": ">=1.0.0"
+    "minimist": "^1.1.0",
+    "request": ">=1.0.0",
+    "run-parallel": "^1.0.0"
   },
   "bin": {
     "dependents-tree": "./app.js"

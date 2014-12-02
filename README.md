@@ -7,52 +7,86 @@ Figure out dependents tree for a given NPM package
 
 command line:
 
-    dependents-tree <package-name>
+    dependents-tree <package-name1> <package-name2> ...
+    dependents-tree --search=<keyword>
 
 as a submodule:
 
 ``` javascript
 
-    var findDependents = require('dependents-tree');
-    findDependenents('bittorrent-dht', function(err, tree) {
-        
-	})
+    var findDependenents = require('dependents-tree');
+    findDependenents.lookup(['bittorrent-dht', 'node-ssdp'], function(err, tree) {
+
+		})
+
+    findDependenents.search('bittorrent', function(err, tree) {
+        // tree of dependents per module that matches the keyword 'bittorrent'
+		})
+
 ```
 
-## Result example:
+## Result example for query `dependents-tree bittorrent-dht node-ssdp`:
 	
 ``` json
 
 {
-	"itty-bitty-torrent": {},
-	"torrent-discovery": {
+	"bittorrent-dht": {
+		"itty-bitty-torrent": {},
+		"torrent-discovery": {
+			"webtorrent": {
+				"torrnode": {}
+			}
+		},
+		"torrent-stream": {
+			"nesbox-time": {},
+			"nw-updater": {},
+			"peerflix": {
+				"castnow": {},
+				"cinebeam": {},
+				"ezflix": {},
+				"morrent": {},
+				"peercast": {},
+				"playify": {},
+				"torrentcast": {}
+			},
+			"peerflix-headless": {},
+			"peerflix-server": {},
+			"peermaps": {},
+			"peerwiki": {},
+			"tget": {},
+			"torrent": {},
+			"torrent-blob-store": {},
+			"torrent-docker": {},
+			"torrent-mount": {},
+			"wnp": {}
+		},
 		"webtorrent": {
 			"torrnode": {}
 		}
 	},
-	"torrent-stream": {
-		"nw-updater": {},
-		"os-torrent-hash": {},
-		"peerflix": {
-			"castnow": {},
-			"cinebeam": {},
-			"ezflix": {},
-			"morrent": {},
-			"peercast": {},
-			"torrentcast": {}
+	"node-ssdp": {
+		"dial": {
+			"chromecast": {
+				"hubot-chromecast-youtube": {}
+			}
 		},
-		"peerflix-headless": {},
-		"peerflix-server": {},
-		"peermaps": {},
-		"peerwiki": {},
-		"tget": {},
-		"torrent": {},
-		"torrent-blob-store": {},
-		"torrent-mount": {},
-		"wnp": {}
-	},
-	"webtorrent": {
-		"torrnode": {}
+		"huejs": {},
+		"lumix": {},
+		"node-upnp-client": {},
+		"nodecast": {},
+		"ssdp-proxy": {},
+		"upnpserver": {
+			"upnpserver-cli": {}
+		},
+		"wemo": {
+			"meshblu-wemo": {},
+			"node-red-node-wemo": {},
+			"skynet-wemo": {}
+		},
+		"wemo-js": {
+			"zetta-wemo-driver": {}
+		},
+		"wemore": {}
 	}
 }
 

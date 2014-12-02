@@ -1,7 +1,7 @@
 dependents-tree
 ===============
 
-Figure out dependents tree for a given NPM package
+Figure out the dependents tree for a given NPM package - all the packages that depend on a given package, all the packages that depend on those dependents, etc.
 
 ## Usage
 
@@ -16,7 +16,7 @@ as a submodule:
 
     var findDependenents = require('dependents-tree');
     findDependenents.lookup(['bittorrent-dht', 'node-ssdp'], function(err, tree) {
-
+      // tree is the tree of dependents on 'bittorrent-dht'
 		})
 
     findDependenents.search('bittorrent', function(err, tree) {
